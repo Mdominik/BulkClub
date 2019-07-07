@@ -1,6 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QFile>
+
+
+//nomenclature:
+// login window --> the window for login
+// management system window --> the main window after login
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -9,62 +14,75 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->id_input->setPlaceholderText("Your ID");
     ui->psw_input->setPlaceholderText("Your psw");
-    initializeUsers();
-    retrieveCredentials();
+    manSystem = ManagementSystem();
+
+    //hides management system window
+    ui->mainMenu->hide();
+    ui->logout->hide();
+    ui->admin_man->hide();
+    ui->id->hide();
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+
 }
 
-
-void MainWindow::initializeUsers() {
-    manager = User(false, 0, "");
-    admin = User(true, 0, "");
-}
-
-bool MainWindow::retrieveCredentials() {
-    int counter=0;
-    QFile credentials_file("/home/dominik/projects/study/BulkClub/BulkClub/login.txt");
-    if(credentials_file.exists()){
-        if (!credentials_file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-            qDebug() << manager.m_loginID;
-            return false;
-        }
-        while (!credentials_file.atEnd()) {
-            bool encoding;
-            QByteArray line = credentials_file.readLine();
-            line = line.trimmed();
-            if(counter==0) manager.m_loginID = QString(line).toInt(&encoding, 10);
-            if(counter==1) manager.m_password = QString(line);
-            if(counter==2) admin.m_loginID = QString(line).toInt(&encoding, 10);
-            if(counter==3) admin.m_password = QString(line);
-            counter++;
-        }
-        return true;
-    }
-    else {
-        qDebug() << "File doesnt exists";
-        return false;
-    }
-}
-
+//button for logging in released. Checks credentials and logs in.
 void MainWindow::on_login_btn_released()
 {
     bool ok;
+
+    //get data from input
     QString id_text = ui->id_input->text();
     QString psw_text = ui->psw_input->text();
 
     //check manager's credentials
-    if(manager.m_loginID == id_text.toInt(&ok, 10) && !manager.m_password.compare(psw_text)) {
-        qInfo() << "Manager(" << manager.m_loginID << ") just logged in.";
-        manager.m_loggedNow = true;
+    if(manSystem.getManager().getLogin() == id_text.toInt(&ok, 10) && !manSystem.getManager().getPsw().compare(psw_text)) {
+        qInfo() << "Manager(" << manSystem.getManager().getLogin() << ") just logged in.";
+        manSystem.getManager().setLoggedNow(true);
+        disappearAfterLogged(false);
+
     }
 
     //check admin's credentials
-    else if(admin.m_loginID == id_text.toInt(&ok, 10) && !admin.m_password.compare(psw_text)) {
-        qInfo() << "Admin(" << admin.m_loginID << ") just logged in.";
-        admin.m_loggedNow = true;
+    else if(manSystem.getAdmin().getLogin() == id_text.toInt(&ok, 10) && !manSystem.getAdmin().getPsw().compare(psw_text))  {
+        qInfo() << "Admin(" << manSystem.getAdmin().getLogin()<< ") just logged in.";
+        manSystem.getAdmin().setLoggedNow(true);
+        disappearAfterLogged(true);
+
     }
+}
+
+
+// hides the elements of the login window and shows the elements of the management system window.
+// It also updates the personal data info shown (admin/manager + ID)
+void MainWindow::disappearAfterLogged(bool adminLogged) {
+    ui->header_label->hide();
+    ui->login_form->hide();
+    ui->mainMenu->show();
+    ui->logout->show();
+    ui->admin_man->show();
+    ui->id->show();
+    if (adminLogged) {
+        ui->admin_man->setText("admin");
+        qInfo() << manSystem.getAdmin().getLogin();
+        ui->id->setText("ID: " + QString::number(manSystem.getAdmin().getLogin()));
+        manSystem.setCurrentlyLogged(CurrentlyLogged::admin);
+    } else {
+        ui->admin_man->setText("manager");
+        qInfo() << manSystem.getManager().getLogin();
+        ui->id->setText("ID: " + QString::number(manSystem.getManager().getLogin()));
+        manSystem.setCurrentlyLogged(CurrentlyLogged::manager);
+    }
+}
+
+void MainWindow::on_logout_released()
+{
+    manSystem.setCurrentlyLogged(CurrentlyLogged::noOne);
+    manSystem.getAdmin().setLoggedNow(false);
+    manSystem.getManager().setLoggedNow(false);
+    QApplication::quit();
 }

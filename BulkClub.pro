@@ -27,15 +27,18 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
         user.cpp \
-    managementsystem.cpp
+    managementsystem.cpp \
+    inside.cpp
 
 HEADERS += \
         mainwindow.h \
         user.h \
-    managementsystem.h
+    managementsystem.h \
+    inside.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    inside.ui
 
 STATECHARTS +=
 
