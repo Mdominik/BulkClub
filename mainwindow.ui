@@ -154,27 +154,6 @@
      </property>
     </widget>
    </widget>
-   <widget class="QLabel" name="login_header">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>100</y>
-      <width>552</width>
-      <height>40</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>16</pointsize>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QTabWidget" name="mainMenu">
     <property name="enabled">
      <bool>true</bool>
@@ -188,7 +167,7 @@
      </rect>
     </property>
     <property name="cursor">
-     <cursorShape>ArrowCursor</cursorShape>
+     <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="currentIndex">
      <number>0</number>
@@ -197,26 +176,697 @@
      <attribute name="title">
       <string>Report</string>
      </attribute>
+     <widget class="QTextBrowser" name="display">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>351</width>
+        <height>421</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelWeekday">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>100</y>
+        <width>151</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Choose the weekday:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelRevenue">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>170</y>
+        <width>151</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Revenue:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="revenue">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>190</y>
+        <width>151</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>0.00</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="showExec">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>220</y>
+        <width>201</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Show Executive Members</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="showRegular">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>250</y>
+        <width>191</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Show Regular Members</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="numberExec">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>310</y>
+        <width>151</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelExec">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>290</y>
+        <width>221</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Number of Executive Members:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="numberRegular">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>370</y>
+        <width>151</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelRegular">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>350</y>
+        <width>221</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Number of Regular Members:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="login_header">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>80</y>
+        <width>552</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="display_btn">
+      <property name="geometry">
+       <rect>
+        <x>570</x>
+        <y>390</y>
+        <width>151</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Display</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="weekdayBox">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>120</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Monday</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Tuesday</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Wednesday</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Thursday</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Friday</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Saturday</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Sunday</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>30</y>
+        <width>181</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>13</pointsize>
+        <italic>true</italic>
+       </font>
+      </property>
+      <property name="text">
+       <string>This section lets you
+generate the day report</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="all_purch">
      <attribute name="title">
       <string>All purchases</string>
      </attribute>
+     <widget class="QTextBrowser" name="display_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>351</width>
+        <height>421</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="display_btn_2">
+      <property name="geometry">
+       <rect>
+        <x>570</x>
+        <y>390</y>
+        <width>151</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="text">
+       <string>Display</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>30</y>
+        <width>181</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>13</pointsize>
+        <italic>true</italic>
+       </font>
+      </property>
+      <property name="text">
+       <string>This section displays all 
+purchases sorted by 
+membership no.</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="grandTotal">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>220</y>
+        <width>151</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>0.00</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelGrandTotal">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>190</y>
+        <width>151</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Grand total:</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="items_sold">
      <attribute name="title">
       <string>Items sold</string>
      </attribute>
+     <widget class="QTextBrowser" name="display_3">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>351</width>
+        <height>421</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelTotalRev">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>190</y>
+        <width>151</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Total revenue:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="totalRevenue">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>220</y>
+        <width>151</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>0.00</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>30</y>
+        <width>221</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>13</pointsize>
+        <italic>true</italic>
+       </font>
+      </property>
+      <property name="text">
+       <string>This section displays each
+item sold sorted by quantity</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="display_btn_3">
+      <property name="geometry">
+       <rect>
+        <x>570</x>
+        <y>390</y>
+        <width>151</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="text">
+       <string>Display</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="members">
      <attribute name="title">
       <string>Members</string>
      </attribute>
+     <widget class="QTextBrowser" name="display_4">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>351</width>
+        <height>421</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>30</y>
+        <width>231</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>13</pointsize>
+        <italic>true</italic>
+       </font>
+      </property>
+      <property name="text">
+       <string>This section displays  
+members (using filters)</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="optionBox">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>130</y>
+        <width>171</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Search by item name</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Search by ID</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Display rebate</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Delete/Add member
+
+
+</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="labelRevenue_4">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>100</y>
+        <width>151</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Choose an option:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelRevenue_5">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>190</y>
+        <width>191</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Membership expiring in:</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="expiryBox">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>220</y>
+        <width>171</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>January</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>February</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>March</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>April</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>May</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>June</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>July</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>August</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>September</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>October</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>November</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>December</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QPushButton" name="display_btn_4">
+      <property name="geometry">
+       <rect>
+        <x>570</x>
+        <y>390</y>
+        <width>151</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="text">
+       <string>Display</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="inventory">
      <attribute name="title">
       <string>Inventory</string>
      </attribute>
+     <widget class="QTextBrowser" name="display_5">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>351</width>
+        <height>421</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="addOrDelete">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>130</y>
+        <width>131</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Add item</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Delete item</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>30</y>
+        <width>231</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>13</pointsize>
+        <italic>true</italic>
+       </font>
+      </property>
+      <property name="text">
+       <string>This section lets you
+add and delete items</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelRevenue_6">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>100</y>
+        <width>151</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Add or delete?</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="itemName">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>210</y>
+        <width>113</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelRevenue_7">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>180</y>
+        <width>151</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Name of the item:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelRevenue_8">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>260</y>
+        <width>171</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Gross price for the item:</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="grossPrice">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>290</y>
+        <width>113</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="display_btn_5">
+      <property name="geometry">
+       <rect>
+        <x>570</x>
+        <y>390</y>
+        <width>151</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="text">
+       <string>Add/Delete</string>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QPushButton" name="logout">
@@ -228,6 +878,9 @@
       <height>31</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="text">
      <string>Logout</string>
     </property>
@@ -238,7 +891,7 @@
       <x>630</x>
       <y>30</y>
       <width>131</width>
-      <height>80</height>
+      <height>51</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="personal_data">
@@ -257,15 +910,20 @@
       </widget>
      </item>
     </layout>
-    <zorder>admin_man</zorder>
-    <zorder>id</zorder>
    </widget>
-   <zorder>header_label</zorder>
-   <zorder>login_form</zorder>
-   <zorder>mainMenu</zorder>
-   <zorder>login_header</zorder>
-   <zorder>logout</zorder>
-   <zorder>verticalLayoutWidget</zorder>
+   <widget class="Line" name="line">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>60</y>
+      <width>20</width>
+      <height>421</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>

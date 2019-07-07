@@ -28,13 +28,17 @@ SOURCES += \
         mainwindow.cpp \
         user.cpp \
     managementsystem.cpp \
-    inside.cpp
+    inside.cpp \
+    item.cpp \
+    member.cpp
 
 HEADERS += \
         mainwindow.h \
         user.h \
     managementsystem.h \
-    inside.h
+    inside.h \
+    item.h \
+    member.h
 
 FORMS += \
         mainwindow.ui \

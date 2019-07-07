@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->logout->hide();
     ui->admin_man->hide();
     ui->id->hide();
+    ui->line->hide();
 
 }
 
@@ -66,15 +67,18 @@ void MainWindow::disappearAfterLogged(bool adminLogged) {
     ui->logout->show();
     ui->admin_man->show();
     ui->id->show();
+    ui->line->show();
     if (adminLogged) {
         ui->admin_man->setText("admin");
         qInfo() << manSystem.getAdmin().getLogin();
         ui->id->setText("ID: " + QString::number(manSystem.getAdmin().getLogin()));
+
         manSystem.setCurrentlyLogged(CurrentlyLogged::admin);
     } else {
         ui->admin_man->setText("manager");
         qInfo() << manSystem.getManager().getLogin();
         ui->id->setText("ID: " + QString::number(manSystem.getManager().getLogin()));
+
         manSystem.setCurrentlyLogged(CurrentlyLogged::manager);
     }
 }
