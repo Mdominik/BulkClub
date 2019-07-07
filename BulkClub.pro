@@ -30,7 +30,8 @@ SOURCES += \
     managementsystem.cpp \
     inside.cpp \
     item.cpp \
-    member.cpp
+    member.cpp \
+    sale.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -38,7 +39,8 @@ HEADERS += \
     managementsystem.h \
     inside.h \
     item.h \
-    member.h
+    member.h \
+    sale.h
 
 FORMS += \
         mainwindow.ui \
@@ -47,3 +49,6 @@ FORMS += \
 STATECHARTS +=
 
 RESOURCES +=
+
+DISTFILES += \
+    todo

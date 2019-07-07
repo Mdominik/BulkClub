@@ -14,6 +14,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->id_input->setPlaceholderText("Your ID");
     ui->psw_input->setPlaceholderText("Your psw");
+
+
     manSystem = ManagementSystem();
 
     //hides management system window
@@ -70,15 +72,11 @@ void MainWindow::disappearAfterLogged(bool adminLogged) {
     ui->line->show();
     if (adminLogged) {
         ui->admin_man->setText("admin");
-        qInfo() << manSystem.getAdmin().getLogin();
         ui->id->setText("ID: " + QString::number(manSystem.getAdmin().getLogin()));
-
         manSystem.setCurrentlyLogged(CurrentlyLogged::admin);
     } else {
         ui->admin_man->setText("manager");
-        qInfo() << manSystem.getManager().getLogin();
         ui->id->setText("ID: " + QString::number(manSystem.getManager().getLogin()));
-
         manSystem.setCurrentlyLogged(CurrentlyLogged::manager);
     }
 }
@@ -89,4 +87,50 @@ void MainWindow::on_logout_released()
     manSystem.getAdmin().setLoggedNow(false);
     manSystem.getManager().setLoggedNow(false);
     QApplication::quit();
+}
+
+
+
+
+void MainWindow::on_display_btn_released()
+{
+    ui->display->clear();
+    int counter=0;
+    for(Member & mem : manSystem.getMembers()) {
+        //ui->display->append("Name: ");
+        ui->display->append(mem.getName());
+        //ui->display->append("Number: ");
+        ui->display->append(QString::number(mem.getNumber()));
+        //ui->display->append("Type: ");
+
+        if(mem.getType()==MembershipType::Executive) {
+            ui->display->append("Executive member");
+        }
+        else if(mem.getType()==MembershipType::Regular) {
+            ui->display->append("Regular member");
+        }
+
+        ui->display->append(mem.getDate().toString());
+        ui->display->append("\n");
+    }
+
+}
+
+void MainWindow::on_display_btn_2_released()
+{
+    ui->display_2->clear();
+    for(auto& vector_sale: manSystem.getSales()) {
+        for(auto& sale: vector_sale) {
+            //ui->display->append("Name: ");
+            ui->display_2->append(sale.getDate().toString());
+            //ui->display->append("Number: ");
+            ui->display_2->append(QString::number(sale.getMember()));
+            //ui->display->append("Type: ");
+            ui->display_2->append(sale.getItem());
+            ui->display_2->append(QString::number(sale.getPrice()));
+            ui->display_2->append(QString::number(sale.getQuantity()));
+
+            ui->display_2->append("\n");
+        }
+    }
 }

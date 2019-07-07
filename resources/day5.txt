@@ -13,7 +13,7 @@ Serendipity
 08/24/2017
 12345
 Runaway Jury
-18.95 2
+18.95	2
 08/24/2017
 61616
 Pork Tenderloin
@@ -25,7 +25,7 @@ Brie (Made in U.S.)
 08/24/2017
 12345
 Fresh Mozzarella
-8.65 2
+8.65	2
 08/24/2017
 12345
 Vine Ripe Tomatoes

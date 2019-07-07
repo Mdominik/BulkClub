@@ -25,8 +25,10 @@ public:
     void disappearAfterLogged(bool adminLogged);
 private slots:
     void on_login_btn_released();
-
     void on_logout_released();
+    void on_display_btn_released();
+
+    void on_display_btn_2_released();
 
 private:
     Ui::MainWindow *ui;

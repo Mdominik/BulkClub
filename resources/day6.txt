@@ -5,7 +5,7 @@ Crest Toothpaste
 08/25/2017
 12345
 Beef Steak
-18.95 2
+18.95	2
 08/25/2017
 61616
 Pork Tenderloin
@@ -17,7 +17,7 @@ Brie (Made in U.S.)
 08/25/2017
 12345
 Fresh Mozzarella
-8.65 2
+8.65	2
 08/25/2017
 12345
 Vine Ripe Tomatoes
