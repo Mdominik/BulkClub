@@ -9,7 +9,7 @@
 #include <QDebug>
 #include "managementsystem.h"
 #include "inside.h"
-
+#include "sale.h"
 namespace Ui {
 class MainWindow;
 }

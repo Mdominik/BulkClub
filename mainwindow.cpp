@@ -30,7 +30,6 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-
 }
 
 //button for logging in released. Checks credentials and logs in.
@@ -47,7 +46,6 @@ void MainWindow::on_login_btn_released()
         qInfo() << "Manager(" << manSystem.getManager().getLogin() << ") just logged in.";
         manSystem.getManager().setLoggedNow(true);
         disappearAfterLogged(false);
-
     }
 
     //check admin's credentials
@@ -94,34 +92,73 @@ void MainWindow::on_logout_released()
 
 void MainWindow::on_display_btn_released()
 {
+//    ui->display->clear();
+//    int counter=0;
+//    for(Member & mem : manSystem.getMembers()) {
+//        //ui->display->append("Name: ");
+//        ui->display->append(mem.getName());
+//        //ui->display->append("Number: ");
+//        ui->display->append(QString::number(mem.getNumber()));
+//        //ui->display->append("Type: ");
+
+//        if(mem.getType()==MembershipType::Executive) {
+//            ui->display->append("Executive member");
+//        }
+//        else if(mem.getType()==MembershipType::Regular) {
+//            ui->display->append("Regular member");
+//        }
+
+//        ui->display->append(mem.getDate().toString());
+//        ui->display->append("\n");
+//    }
+
     ui->display->clear();
-    int counter=0;
-    for(Member & mem : manSystem.getMembers()) {
-        //ui->display->append("Name: ");
-        ui->display->append(mem.getName());
-        //ui->display->append("Number: ");
-        ui->display->append(QString::number(mem.getNumber()));
-        //ui->display->append("Type: ");
+    float priceSum=0;
 
-        if(mem.getType()==MembershipType::Executive) {
-            ui->display->append("Executive member");
+    int sum_exec = 0;
+    int sum_regular = 0;
+    for(auto& sale: manSystem.getSales()[ui->weekdayBox->currentIndex()]) {
+        if(ui->showExec->checkState()) {
+            int i = manSystem.getExecutiveMembers().indexOf(sale.getMember());
+            if(i!=-1) {
+                ui->display->append(sale.getDate().toString());
+                ui->display->append(QString::number(sale.getMember()));
+                ui->display->append(sale.getItem());
+                ui->display->append(QString::number(sale.getPrice()));
+                ui->display->append(QString::number(sale.getQuantity()));
+                ui->display->append("\n");
+                priceSum = priceSum + sale.getPrice()*sale.getQuantity();
+                sum_exec++;
+            }
         }
-        else if(mem.getType()==MembershipType::Regular) {
-            ui->display->append("Regular member");
+        if(ui->showRegular->checkState()) {
+            int i = manSystem.getRegularMembers().indexOf(sale.getMember());
+            if(i!=-1) {
+                ui->display->append(sale.getDate().toString());
+                ui->display->append(QString::number(sale.getMember()));
+                ui->display->append(sale.getItem());
+                ui->display->append(QString::number(sale.getPrice()));
+                ui->display->append(QString::number(sale.getQuantity()));
+                ui->display->append("\n");
+                priceSum = priceSum + sale.getPrice()*sale.getQuantity();
+                sum_regular++;
+            }
         }
-
-        ui->display->append(mem.getDate().toString());
-        ui->display->append("\n");
     }
-
+    ui->revenue->setText("$"+QString::number(priceSum));
+    ui->numberExec->setText(QString::number(sum_exec));
+    ui->numberRegular->setText(QString::number(sum_regular));
 }
 
 void MainWindow::on_display_btn_2_released()
 {
     ui->display_2->clear();
+
     for(auto& vector_sale: manSystem.getSales()) {
         for(auto& sale: vector_sale) {
             //ui->display->append("Name: ");
+
+
             ui->display_2->append(sale.getDate().toString());
             //ui->display->append("Number: ");
             ui->display_2->append(QString::number(sale.getMember()));
@@ -134,3 +171,5 @@ void MainWindow::on_display_btn_2_released()
         }
     }
 }
+
+

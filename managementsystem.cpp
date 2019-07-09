@@ -14,8 +14,11 @@ ManagementSystem::ManagementSystem()
     retrieveCredentials();
     populateMembersData(file);
     for(QFile* f : m_salesFiles) {
-
         populateDaySales(f);
+    }
+    for(auto& mem : m_members) {
+        if(mem.getType()==1) m_regularMembers.push_back(mem.getNumber());
+        else if(mem.getType()==0) m_executiveMembers.push_back(mem.getNumber());
 
     }
 }
@@ -108,6 +111,8 @@ bool ManagementSystem::populateMembersData(QFile& file){
     }
 }
 
+
+
 bool ManagementSystem::populateDaySales(QFile* file) {
         QVector<Sale> day_vector;
         int lines_number=4;
@@ -146,7 +151,6 @@ bool ManagementSystem::populateDaySales(QFile* file) {
 
                     QStringList list;
                     list = QString(line).split('\t');
-                    qDebug() << list.size();
                     item_price_buf = QString(list[0]).toFloat();
                     quantity_buf = QString(list[1]).toInt();
                     sale = new Sale;
@@ -155,15 +159,27 @@ bool ManagementSystem::populateDaySales(QFile* file) {
                     sale->setMember(number_buf);
                     sale->setPrice(item_price_buf);
                     sale->setQuantity(quantity_buf);
+
+
                     day_vector.push_back(*sale);
-                    delete sale;
+
+
                 }
-                m_allSales.push_back(day_vector);
+
                 counter++;
+
             }
+           m_allSales.push_back(day_vector);
         }
         else {
             qDebug() << "File doesnt exists";
             return false;
+        }
+        for(auto& sales : getSales()) {
+            for(auto& s : sales) {
+                qInfo() << s.getPrice();
+                qInfo() << s.getQuantity();
+                qInfo() << s.getItem();
+            }
         }
 }

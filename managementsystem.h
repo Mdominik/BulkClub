@@ -38,14 +38,18 @@ public:
     void setMembers(QVector<Member>& mem) {m_members=mem;}
     bool populateMembersData(QFile& file);
     bool populateDaySales(QFile* file);
+    QVector<int> getExecutiveMembers() const {return m_executiveMembers;}
+    QVector<int> getRegularMembers() const {return m_regularMembers;}
 
 private:
     User admin;
     User manager;
     QVector<Member> m_members;
-    CurrentlyLogged logged;
-    QVector<QVector<Sale>> m_allSales;//0=no one, 1=admin, 2=manager
+    CurrentlyLogged logged;//0=no one, 1=admin, 2=manager
+    QVector<QVector<Sale>> m_allSales;
     QFile* m_salesFiles[7];
+    QVector<int> m_executiveMembers;
+    QVector<int> m_regularMembers;
 };
 
 
