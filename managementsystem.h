@@ -44,7 +44,7 @@ public:
     QVector<int> getExecutiveMembers() const {return m_executiveMembers;}
     QVector<int> getRegularMembers() const {return m_regularMembers;}
     QVector<Sale> getAllSalesOneVec() const {return m_allSalesOneVec;}
-
+    QVector<Item*> getAllItems() const { return m_allItems;}
 private:
     User admin;
     User manager;
@@ -55,6 +55,8 @@ private:
     QFile* m_salesFiles[7];
     QVector<int> m_executiveMembers;
     QVector<int> m_regularMembers;
+    QVector<Item*> m_allItems;
+    QVector<QString> m_allItemsNames;
 };
 
 

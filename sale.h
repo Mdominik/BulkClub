@@ -9,24 +9,20 @@ class Sale
 public:
     Sale();
     int getQuantity() const {return m_quantity;}
-    float getPrice() const {return m_price;}
-    QString getItem() const {return item;}
+
     int getMember() const {return m_number;}
     QDate getDate() const {return m_date;}
-    void setItem(QString it) {item=it;}
-    void setPrice(float price) {m_price=price;}
+    Item* getItem() {return m_item;}
     void setMember(int number) {m_number=number;}
     void setQuantity(int q) {m_quantity=q;}
     void setDate(QDate date) {m_date=date;}
-    float getPriceBeforeTax() const {return m_price*(1-sales_tax);}
-
+    float getPriceBeforeTax() const {return m_item->getPrice()*(1-sales_tax);}
+    void setItem(Item* it) {m_item=it;}
 
 private:
     QDate m_date;
     int m_number;
-
-    QString item;
-    float m_price;
+    Item* m_item;
     int m_quantity;
     static int sales_tax;
 };

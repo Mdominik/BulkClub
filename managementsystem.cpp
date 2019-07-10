@@ -1,5 +1,5 @@
 #include "managementsystem.h"
-
+static int ccc=0;
 ManagementSystem::ManagementSystem()
 {
     QFile file(MEMBERS_FILE);
@@ -13,14 +13,18 @@ ManagementSystem::ManagementSystem()
     initializeUsers();
     retrieveCredentials();
     populateMembersData(file);
+
     for(QFile* f : m_salesFiles) {
         populateDaySales(f);
+
     }
     for(auto& mem : m_members) {
         if(mem.getType()==1) m_regularMembers.push_back(mem.getNumber());
         else if(mem.getType()==0) m_executiveMembers.push_back(mem.getNumber());
-
     }
+
+
+
 }
 void ManagementSystem::initializeUsers() {
     manager = User(false, 0, "");
@@ -110,9 +114,11 @@ bool ManagementSystem::populateMembersData(QFile& file){
 
 
 bool ManagementSystem::populateDaySales(QFile* file) {
+
         QVector<Sale> day_vector;
         int lines_number=4;
         Sale* sale;
+        Item* item;
         int number_buf;
         QDate date_buf;
         QString item_buf;
@@ -126,6 +132,7 @@ bool ManagementSystem::populateDaySales(QFile* file) {
                 return false;
             }
             while (!file->atEnd()) {
+
                 bool encoding;
                 QByteArray line = file->readLine();
                 line = line.trimmed();
@@ -136,32 +143,57 @@ bool ManagementSystem::populateDaySales(QFile* file) {
                 }
                 else if((counter+3) % lines_number==0) {
                     number_buf = QString(line).toInt(&encoding, 10);
+
                 }
                 else if((counter+2) % lines_number==0) {
                     item_buf = QString(line);
                 }
                 else if((counter+1) % lines_number==0) {
+
                     QStringList list;
                     list = QString(line).split('\t');
                     item_price_buf = QString(list[0]).toFloat();
                     quantity_buf = QString(list[1]).toInt();
                     sale = new Sale;
                     sale->setDate(date_buf);
-                    sale->setItem(item_buf);
-                    sale->setMember(number_buf);
-                    sale->setPrice(item_price_buf);
                     sale->setQuantity(quantity_buf);
-                    day_vector.push_back(*sale);
+                    sale->setMember(number_buf);
+
+                    int i = m_allItemsNames.indexOf(item_buf);
+                    if(i==-1) {
+                        item = new Item;
+                        m_allItemsNames.append(item_buf);
+                        item->setName(item_buf);
+                        item->setPrice(item_price_buf);
+                        m_allItems.push_back(item);
+                        qInfo() << "Adres itema TAK: " << item;
+                    }
+                    else {
+
+                        for (int j=0; j < m_allItems.size(); j++) {
+                            if(!m_allItems[j]->getName().compare(item_buf)) {
+                                item = m_allItems[j];
+                                qInfo() << "Adres itema NIE: " << m_allItems[j];
+
+                            }
+                        }
+                    }
+
+                    sale->setItem(item);
+
                     m_allSalesOneVec.push_back(*sale);
+                    day_vector.push_back(*sale);
                 }
                 counter++;
             }
-           m_allSales.push_back(day_vector);
         }
         else {
             qDebug() << "File doesnt exists";
             return false;
         }
+        //qInfo() << day_vector[0].getItem()->getPrice();
+
+        m_allSales.push_back(day_vector);
 }
 
 void ManagementSystem::sortPurchasesByNumber() {
