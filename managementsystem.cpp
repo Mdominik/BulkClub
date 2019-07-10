@@ -12,12 +12,13 @@ ManagementSystem::ManagementSystem()
     m_salesFiles[6] = new QFile (DAY7_FILE);
     initializeUsers();
     retrieveCredentials();
-    populateMembersData(file);
+
 
     for(QFile* f : m_salesFiles) {
         populateDaySales(f);
 
     }
+    populateMembersData(file);
     for(auto& mem : m_members) {
         if(mem.getType()==1) m_regularMembers.push_back(mem.getNumber());
         else if(mem.getType()==0) m_executiveMembers.push_back(mem.getNumber());
@@ -157,30 +158,31 @@ bool ManagementSystem::populateDaySales(QFile* file) {
                     sale = new Sale;
                     sale->setDate(date_buf);
                     sale->setQuantity(quantity_buf);
-                    sale->setMember(number_buf);
+                    sale->setMembersID(number_buf);
+
 
                     int i = m_allItemsNames.indexOf(item_buf);
+
+                    // create a new item object if it doesn't exist yet
                     if(i==-1) {
                         item = new Item;
                         m_allItemsNames.append(item_buf);
                         item->setName(item_buf);
                         item->setPrice(item_price_buf);
-                        m_allItems.push_back(item);
-                        qInfo() << "Adres itema TAK: " << item;
-                    }
-                    else {
 
+                        m_allItems.push_back(item);
+                    }
+
+                    // use an existing item object
+                    else {
                         for (int j=0; j < m_allItems.size(); j++) {
                             if(!m_allItems[j]->getName().compare(item_buf)) {
                                 item = m_allItems[j];
-                                qInfo() << "Adres itema NIE: " << m_allItems[j];
-
                             }
                         }
                     }
-
+                    item->setCount(item->getCount()+quantity_buf); //increment amount of items sold
                     sale->setItem(item);
-
                     m_allSalesOneVec.push_back(*sale);
                     day_vector.push_back(*sale);
                 }
@@ -198,7 +200,7 @@ bool ManagementSystem::populateDaySales(QFile* file) {
 
 void ManagementSystem::sortPurchasesByNumber() {
     std::sort(m_allSalesOneVec.begin(), m_allSalesOneVec.end(), [](Sale& a, Sale& b) {
-        return a.getMember() < b.getMember();
+        return a.getMembersID() < b.getMembersID();
     });
     return;
 }

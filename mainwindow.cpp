@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include <algorithm>
 
 //nomenclature:
 // login window --> the window for login
@@ -21,7 +21,18 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->admin_man->hide();
     ui->id->hide();
     ui->line->hide();
+    QStringList list;
 
+    QVector<Item*> v = manSystem.getAllItems();
+    std::sort(v.begin(), v.end(), [](Item* a, Item* b) {
+        return a->getName() < b->getName();
+    });
+    //add names of items to the combo box
+
+    for(auto& x : v) {
+        list.append(x->getName());
+    }
+    ui->ItemsComboBox->addItems(list);
 }
 
 MainWindow::~MainWindow()
@@ -100,10 +111,10 @@ void MainWindow::on_display_btn_released()
 //    qInfo() << manSystem.getSales()[6].size();
     for(auto& sale: manSystem.getSales()[ui->weekdayBox->currentIndex()]) {
         if(ui->showExec->checkState()) {
-            int i = manSystem.getExecutiveMembers().indexOf(sale.getMember());
+            int i = manSystem.getExecutiveMembers().indexOf(sale.getMembersID());
             if(i!=-1) {
                 ui->display->append(sale.getDate().toString());
-                ui->display->append(QString::number(sale.getMember()));
+                ui->display->append(QString::number(sale.getMembersID()));
                 ui->display->append(sale.getItem()->getName());
                 ui->display->append(QString::number(sale.getItem()->getPrice()));
                 ui->display->append(QString::number(sale.getQuantity()));
@@ -113,10 +124,10 @@ void MainWindow::on_display_btn_released()
             }
         }
         if(ui->showRegular->checkState()) {
-            int i = manSystem.getRegularMembers().indexOf(sale.getMember());
+            int i = manSystem.getRegularMembers().indexOf(sale.getMembersID());
             if(i!=-1) {
                 ui->display->append(sale.getDate().toString());
-                ui->display->append(QString::number(sale.getMember()));
+                ui->display->append(QString::number(sale.getMembersID()));
                 ui->display->append(sale.getItem()->getName());
                 ui->display->append(QString::number(sale.getItem()->getPrice()));
                 ui->display->append(QString::number(sale.getQuantity()));
@@ -138,7 +149,7 @@ void MainWindow::on_display_btn_2_released()
     float sum=0;
     for(auto& sale: manSystem.getAllSalesOneVec()) {
         ui->display_2->append(sale.getDate().toString());
-        ui->display_2->append(QString::number(sale.getMember()));
+        ui->display_2->append(QString::number(sale.getMembersID()));
         ui->display_2->append(sale.getItem()->getName());
         ui->display_2->append(QString::number(sale.getItem()->getPrice()));
         ui->display_2->append(QString::number(sale.getQuantity()));
@@ -149,3 +160,57 @@ void MainWindow::on_display_btn_2_released()
 }
 
 
+
+void MainWindow::on_display_btn_3_released()
+{
+    ui->display_3->clear();
+    float sum=0;
+//    copy and sort Items by count number
+    QVector<Item*> v = manSystem.getAllItems();
+    std::sort(v.begin(), v.end(), [](Item* a, Item* b) {
+        return a->getCount() > b->getCount();
+    });
+    QString current_item_chosen = ui->ItemsComboBox->currentText();
+
+    if(current_item_chosen.compare("ALL ITEMS")) {
+        sum=0;
+        for(auto& item : v) {
+            if(!item->getName().compare(current_item_chosen)) {
+                ui->display_3->append(item->getName());
+                ui->display_3->append("Price per unit: " + QString::number(item->getPrice()));
+                ui->display_3->append("Sold: " + QString::number(item->getCount()));
+                ui->display_3->append("\n");
+                sum += item->getPrice()*item->getCount();
+            }
+        }
+    }
+    else {
+        sum=0;
+        for(auto& item: v) {
+            ui->display_3->append(item->getName());
+            ui->display_3->append("Price per unit: " + QString::number(item->getPrice()));
+            ui->display_3->append("Sold: " + QString::number(item->getCount()));
+            ui->display_3->append("\n");
+            sum += item->getPrice()*item->getCount();
+        }
+
+    }
+    ui->totalRevenue->setText("$" + QString::number(sum));
+}
+
+void MainWindow::on_btn_searchByItemsName_released()
+{
+    float total=0;
+    ui->display_3->clear();
+    QString text = ui->searchByItemsName->text();
+    for(auto& item : manSystem.getAllItems()) {
+        if(!item->getName().compare(text)) {
+            ui->display_3->append(item->getName());
+            ui->display_3->append("Price per unit: " + QString::number(item->getPrice()));
+            ui->display_3->append("Sold: " + QString::number(item->getCount()));
+            ui->display_3->append("\n");
+            total = item->getPrice()*item->getCount();
+        }
+    }
+    ui->totalRevenue->setText("$" + QString::number(total));
+}

@@ -170,7 +170,7 @@
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="report">
      <attribute name="title">
@@ -499,7 +499,7 @@ membership no.</string>
       <property name="geometry">
        <rect>
         <x>420</x>
-        <y>190</y>
+        <y>300</y>
         <width>151</width>
         <height>17</height>
        </rect>
@@ -512,7 +512,7 @@ membership no.</string>
       <property name="geometry">
        <rect>
         <x>450</x>
-        <y>220</y>
+        <y>330</y>
         <width>151</width>
         <height>17</height>
        </rect>
@@ -525,7 +525,7 @@ membership no.</string>
       <property name="geometry">
        <rect>
         <x>420</x>
-        <y>30</y>
+        <y>180</y>
         <width>221</width>
         <height>61</height>
        </rect>
@@ -555,6 +555,63 @@ item sold sorted by quantity</string>
       </property>
       <property name="text">
        <string>Display</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="ItemsComboBox">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>250</y>
+        <width>211</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>ALL ITEMS</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLineEdit" name="searchByItemsName">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>120</y>
+        <width>113</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_searchByItemsName">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>120</y>
+        <width>89</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Search</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_6">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>30</y>
+        <width>221</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>13</pointsize>
+        <italic>true</italic>
+       </font>
+      </property>
+      <property name="text">
+       <string>Searching by item's name</string>
       </property>
      </widget>
     </widget>
@@ -601,11 +658,6 @@ members (using filters)</string>
         <height>41</height>
        </rect>
       </property>
-      <item>
-       <property name="text">
-        <string>Search by item name</string>
-       </property>
-      </item>
       <item>
        <property name="text">
         <string>Search by ID</string>

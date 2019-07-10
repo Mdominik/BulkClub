@@ -30,6 +30,10 @@ private slots:
 
     void on_display_btn_2_released();
 
+    void on_display_btn_3_released();
+
+    void on_btn_searchByItemsName_released();
+
 private:
     Ui::MainWindow *ui;
     ManagementSystem manSystem;

@@ -18,7 +18,7 @@ public:
 private:
     QString m_name;
     float m_price;
-    int count;
+    int count=0;
 };
 
 #endif // ITEM_H

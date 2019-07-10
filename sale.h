@@ -10,10 +10,10 @@ public:
     Sale();
     int getQuantity() const {return m_quantity;}
 
-    int getMember() const {return m_number;}
+    int getMembersID() const {return m_number;}
     QDate getDate() const {return m_date;}
     Item* getItem() {return m_item;}
-    void setMember(int number) {m_number=number;}
+    void setMembersID(int number) {m_number=number;}
     void setQuantity(int q) {m_quantity=q;}
     void setDate(QDate date) {m_date=date;}
     float getPriceBeforeTax() const {return m_item->getPrice()*(1-sales_tax);}
