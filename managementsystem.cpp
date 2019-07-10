@@ -70,7 +70,6 @@ bool ManagementSystem::populateMembersData(QFile& file){
             return false;
         }
         while (!file.atEnd()) {
-
             bool encoding;
             QByteArray line = file.readLine();
             line = line.trimmed();
@@ -79,7 +78,6 @@ bool ManagementSystem::populateMembersData(QFile& file){
             }
             else if((counter+3)%4==0) {
                 number_buf = QString(line).toInt(&encoding, 10);
-
             }
             else if((counter+2)%4==0) {
                 if(line.operator == ("Regular")) {
@@ -88,12 +86,10 @@ bool ManagementSystem::populateMembersData(QFile& file){
                 if(line.operator == ("Executive")) {
                     type_buf = MembershipType::Executive;
                 }
-
             }
             else if((counter+1)%4==0) {
                 QString date_str = QString(line);
                 date_buf = QDate::fromString(date_str,"MM/dd/yyyy");
-
                 mem = new Member;
                 mem->setDate(date_buf);
                 mem->setName(name_buf);
@@ -130,7 +126,6 @@ bool ManagementSystem::populateDaySales(QFile* file) {
                 return false;
             }
             while (!file->atEnd()) {
-
                 bool encoding;
                 QByteArray line = file->readLine();
                 line = line.trimmed();
@@ -143,12 +138,9 @@ bool ManagementSystem::populateDaySales(QFile* file) {
                     number_buf = QString(line).toInt(&encoding, 10);
                 }
                 else if((counter+2) % lines_number==0) {
-
                     item_buf = QString(line);
-
                 }
                 else if((counter+1) % lines_number==0) {
-
                     QStringList list;
                     list = QString(line).split('\t');
                     item_price_buf = QString(list[0]).toFloat();
@@ -159,15 +151,10 @@ bool ManagementSystem::populateDaySales(QFile* file) {
                     sale->setMember(number_buf);
                     sale->setPrice(item_price_buf);
                     sale->setQuantity(quantity_buf);
-
-
                     day_vector.push_back(*sale);
-
-
+                    m_allSalesOneVec.push_back(*sale);
                 }
-
                 counter++;
-
             }
            m_allSales.push_back(day_vector);
         }
@@ -175,11 +162,11 @@ bool ManagementSystem::populateDaySales(QFile* file) {
             qDebug() << "File doesnt exists";
             return false;
         }
-        for(auto& sales : getSales()) {
-            for(auto& s : sales) {
-                qInfo() << s.getPrice();
-                qInfo() << s.getQuantity();
-                qInfo() << s.getItem();
-            }
-        }
+}
+
+void ManagementSystem::sortPurchasesByNumber() {
+    std::sort(m_allSalesOneVec.begin(), m_allSalesOneVec.end(), [](Sale& a, Sale& b) {
+        return a.getMember() < b.getMember();
+    });
+    return;
 }

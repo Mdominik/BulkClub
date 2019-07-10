@@ -14,8 +14,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->id_input->setPlaceholderText("Your ID");
     ui->psw_input->setPlaceholderText("Your psw");
-
-
     manSystem = ManagementSystem();
 
     //hides management system window
@@ -36,7 +34,6 @@ MainWindow::~MainWindow()
 void MainWindow::on_login_btn_released()
 {
     bool ok;
-
     //get data from input
     QString id_text = ui->id_input->text();
     QString psw_text = ui->psw_input->text();
@@ -87,31 +84,8 @@ void MainWindow::on_logout_released()
     QApplication::quit();
 }
 
-
-
-
 void MainWindow::on_display_btn_released()
 {
-//    ui->display->clear();
-//    int counter=0;
-//    for(Member & mem : manSystem.getMembers()) {
-//        //ui->display->append("Name: ");
-//        ui->display->append(mem.getName());
-//        //ui->display->append("Number: ");
-//        ui->display->append(QString::number(mem.getNumber()));
-//        //ui->display->append("Type: ");
-
-//        if(mem.getType()==MembershipType::Executive) {
-//            ui->display->append("Executive member");
-//        }
-//        else if(mem.getType()==MembershipType::Regular) {
-//            ui->display->append("Regular member");
-//        }
-
-//        ui->display->append(mem.getDate().toString());
-//        ui->display->append("\n");
-//    }
-
     ui->display->clear();
     float priceSum=0;
 
@@ -152,24 +126,19 @@ void MainWindow::on_display_btn_released()
 
 void MainWindow::on_display_btn_2_released()
 {
+    manSystem.sortPurchasesByNumber();
     ui->display_2->clear();
-
-    for(auto& vector_sale: manSystem.getSales()) {
-        for(auto& sale: vector_sale) {
-            //ui->display->append("Name: ");
-
-
-            ui->display_2->append(sale.getDate().toString());
-            //ui->display->append("Number: ");
-            ui->display_2->append(QString::number(sale.getMember()));
-            //ui->display->append("Type: ");
-            ui->display_2->append(sale.getItem());
-            ui->display_2->append(QString::number(sale.getPrice()));
-            ui->display_2->append(QString::number(sale.getQuantity()));
-
-            ui->display_2->append("\n");
-        }
+    float sum=0;
+    for(auto& sale: manSystem.getAllSalesOneVec()) {
+        ui->display_2->append(sale.getDate().toString());
+        ui->display_2->append(QString::number(sale.getMember()));
+        ui->display_2->append(sale.getItem());
+        ui->display_2->append(QString::number(sale.getPrice()));
+        ui->display_2->append(QString::number(sale.getQuantity()));
+        ui->display_2->append("\n");
+        sum += sale.getPrice()*sale.getQuantity();
     }
+    ui->grandTotal->setText("$" + QString::number(sum));
 }
 
 

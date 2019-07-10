@@ -8,6 +8,8 @@
 #include <QFile>
 #include <QDebug>
 #include <QVector>
+#include <functional>
+
 #define CREDENTIALS_FILE "/home/dominik/projects/study/BulkClub/BulkClub/login.txt"
 #define DAY1_FILE "/home/dominik/projects/study/BulkClub/BulkClub/resources/day1.txt"
 #define DAY2_FILE "/home/dominik/projects/study/BulkClub/BulkClub/resources/day2.txt"
@@ -38,8 +40,10 @@ public:
     void setMembers(QVector<Member>& mem) {m_members=mem;}
     bool populateMembersData(QFile& file);
     bool populateDaySales(QFile* file);
+    void sortPurchasesByNumber();
     QVector<int> getExecutiveMembers() const {return m_executiveMembers;}
     QVector<int> getRegularMembers() const {return m_regularMembers;}
+    QVector<Sale> getAllSalesOneVec() const {return m_allSalesOneVec;}
 
 private:
     User admin;
@@ -47,6 +51,7 @@ private:
     QVector<Member> m_members;
     CurrentlyLogged logged;//0=no one, 1=admin, 2=manager
     QVector<QVector<Sale>> m_allSales;
+    QVector<Sale> m_allSalesOneVec;
     QFile* m_salesFiles[7];
     QVector<int> m_executiveMembers;
     QVector<int> m_regularMembers;

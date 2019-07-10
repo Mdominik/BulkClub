@@ -18,15 +18,17 @@ public:
     void setMember(int number) {m_number=number;}
     void setQuantity(int q) {m_quantity=q;}
     void setDate(QDate date) {m_date=date;}
-
+    float getPriceBeforeTax() const {return m_price*(1-sales_tax);}
 
 
 private:
     QDate m_date;
     int m_number;
+
     QString item;
     float m_price;
     int m_quantity;
+    static int sales_tax;
 };
 
 #endif // SALE_H
