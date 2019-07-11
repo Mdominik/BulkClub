@@ -214,3 +214,31 @@ void MainWindow::on_btn_searchByItemsName_released()
     }
     ui->totalRevenue->setText("$" + QString::number(total));
 }
+
+void MainWindow::on_display_btn_4_released()
+{
+    //clear the field
+    ui->display_4->clear();
+
+    //sort either by ID or by Rebate depending on optionBox (combobox)
+    manSystem.sortMembers(ui->optionBox->currentIndex());
+    for(auto& mem : manSystem.getMembers()) {
+
+        //print name
+        ui->display_4->append(mem.getName());
+
+        //print id
+        ui->display_4->append("ID: "+QString::number(mem.getNumber()));
+
+        //print type
+        static_cast<bool>(mem.getType()) ? ui->display_4->append("Regular") : ui->display_4->append("Executive"); //print type
+
+        //print total spent
+        ui->display_4->append("Total spent: " + QString::number(mem.getTotalSpent()));
+
+        //print rebate
+        if(static_cast<bool>(!mem.getType())) ui->display_4->append("Rebate: " + QString::number(mem.getRebate()));
+
+        ui->display_4->append("");
+    }
+}

@@ -20,6 +20,7 @@
 #define DAY7_FILE "/home/dominik/projects/study/BulkClub/BulkClub/resources/day7.txt"
 #define MEMBERS_FILE "/home/dominik/projects/study/BulkClub/BulkClub/resources/warehouse shoppers.txt"
 
+const float REBATE_PERCENT = 0.03;
 
 enum CurrentlyLogged {
     noOne, admin, manager
@@ -41,10 +42,13 @@ public:
     bool populateMembersData(QFile& file);
     bool populateDaySales(QFile* file);
     void sortPurchasesByNumber();
+    Member* findMember(int id);
+    void sortMembers(bool is_byID);
     QVector<int> getExecutiveMembers() const {return m_executiveMembers;}
     QVector<int> getRegularMembers() const {return m_regularMembers;}
     QVector<Sale> getAllSalesOneVec() const {return m_allSalesOneVec;}
     QVector<Item*> getAllItems() const { return m_allItems;}
+
 private:
     User admin;
     User manager;

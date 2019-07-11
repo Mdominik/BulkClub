@@ -12,17 +12,17 @@ ManagementSystem::ManagementSystem()
     m_salesFiles[6] = new QFile (DAY7_FILE);
     initializeUsers();
     retrieveCredentials();
-
-
-    for(QFile* f : m_salesFiles) {
-        populateDaySales(f);
-
-    }
     populateMembersData(file);
     for(auto& mem : m_members) {
         if(mem.getType()==1) m_regularMembers.push_back(mem.getNumber());
         else if(mem.getType()==0) m_executiveMembers.push_back(mem.getNumber());
     }
+    for(QFile* f : m_salesFiles) {
+        populateDaySales(f);
+
+    }
+
+
 
 
 
@@ -80,11 +80,14 @@ bool ManagementSystem::populateMembersData(QFile& file){
             line = line.trimmed();
             if(counter%4==0) {
                 name_buf = QString(line);
+                qInfo() << line;
             }
             else if((counter+3)%4==0) {
                 number_buf = QString(line).toInt(&encoding, 10);
+
             }
             else if((counter+2)%4==0) {
+
                 if(line.operator == ("Regular")) {
                     type_buf = MembershipType::Regular;
                 }
@@ -101,6 +104,7 @@ bool ManagementSystem::populateMembersData(QFile& file){
                 mem->setNumber(number_buf);
                 mem->setType(type_buf);
                 m_members.push_back(*mem);
+
                 delete mem;
             }
             counter++;
@@ -160,7 +164,6 @@ bool ManagementSystem::populateDaySales(QFile* file) {
                     sale->setQuantity(quantity_buf);
                     sale->setMembersID(number_buf);
 
-
                     int i = m_allItemsNames.indexOf(item_buf);
 
                     // create a new item object if it doesn't exist yet
@@ -185,6 +188,16 @@ bool ManagementSystem::populateDaySales(QFile* file) {
                     sale->setItem(item);
                     m_allSalesOneVec.push_back(*sale);
                     day_vector.push_back(*sale);
+                    Member* mem = findMember(number_buf);
+
+                    mem->setTotalSpent(mem->getTotalSpent()+quantity_buf*item_price_buf);
+
+                    //if the current member is executive, add rebate
+                    if(m_executiveMembers.contains(number_buf)) {
+                        qInfo() << mem->getRebate();
+                        mem->setRebate(mem->getRebate()+REBATE_PERCENT*quantity_buf*item_price_buf);
+                    }
+
                 }
                 counter++;
             }
@@ -193,14 +206,30 @@ bool ManagementSystem::populateDaySales(QFile* file) {
             qDebug() << "File doesnt exists";
             return false;
         }
-        //qInfo() << day_vector[0].getItem()->getPrice();
-
         m_allSales.push_back(day_vector);
 }
+
+Member* ManagementSystem::findMember(int id) {
+    for(auto &mem : m_members){
+        if(mem.getNumber() == id) {
+            return &mem;
+        }
+    }
+    qInfo() << "NOT FOUND";
+    return nullptr;
+}
+
 
 void ManagementSystem::sortPurchasesByNumber() {
     std::sort(m_allSalesOneVec.begin(), m_allSalesOneVec.end(), [](Sale& a, Sale& b) {
         return a.getMembersID() < b.getMembersID();
     });
     return;
+}
+
+//sorting members (true - by id, false - by rebate)
+void ManagementSystem::sortMembers(bool is_byID) {
+    std::sort(m_members.begin(), m_members.end(), [&is_byID](Member& a, Member& b) {
+        return is_byID ? a.getNumber() < b.getNumber() : a.getRebate() > b.getRebate();
+    });
 }

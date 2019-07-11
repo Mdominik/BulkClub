@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>761</width>
-    <height>511</height>
+    <height>592</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -163,14 +163,14 @@
       <x>0</x>
       <y>0</y>
       <width>761</width>
-      <height>491</height>
+      <height>571</height>
      </rect>
     </property>
     <property name="cursor">
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="report">
      <attribute name="title">
@@ -182,7 +182,7 @@
         <x>10</x>
         <y>30</y>
         <width>351</width>
-        <height>421</height>
+        <height>501</height>
        </rect>
       </property>
      </widget>
@@ -413,7 +413,7 @@ generate the day report</string>
         <x>10</x>
         <y>30</y>
         <width>351</width>
-        <height>421</height>
+        <height>501</height>
        </rect>
       </property>
      </widget>
@@ -491,7 +491,7 @@ membership no.</string>
         <x>10</x>
         <y>30</y>
         <width>351</width>
-        <height>421</height>
+        <height>501</height>
        </rect>
       </property>
      </widget>
@@ -625,7 +625,7 @@ item sold sorted by quantity</string>
         <x>10</x>
         <y>30</y>
         <width>351</width>
-        <height>421</height>
+        <height>501</height>
        </rect>
       </property>
      </widget>
@@ -652,36 +652,28 @@ members (using filters)</string>
      <widget class="QComboBox" name="optionBox">
       <property name="geometry">
        <rect>
-        <x>420</x>
-        <y>130</y>
+        <x>400</x>
+        <y>150</y>
         <width>171</width>
         <height>41</height>
        </rect>
       </property>
       <item>
        <property name="text">
-        <string>Search by ID</string>
+        <string>Sort by rebate</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Display rebate</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Delete/Add member
-
-
-</string>
+        <string>Sort by ID</string>
        </property>
       </item>
      </widget>
      <widget class="QLabel" name="labelRevenue_4">
       <property name="geometry">
        <rect>
-        <x>420</x>
-        <y>100</y>
+        <x>400</x>
+        <y>120</y>
         <width>151</width>
         <height>17</height>
        </rect>
@@ -693,8 +685,8 @@ members (using filters)</string>
      <widget class="QLabel" name="labelRevenue_5">
       <property name="geometry">
        <rect>
-        <x>420</x>
-        <y>190</y>
+        <x>400</x>
+        <y>220</y>
         <width>191</width>
         <height>17</height>
        </rect>
@@ -706,8 +698,8 @@ members (using filters)</string>
      <widget class="QComboBox" name="expiryBox">
       <property name="geometry">
        <rect>
-        <x>420</x>
-        <y>220</y>
+        <x>400</x>
+        <y>250</y>
         <width>171</width>
         <height>41</height>
        </rect>
@@ -776,8 +768,8 @@ members (using filters)</string>
      <widget class="QPushButton" name="display_btn_4">
       <property name="geometry">
        <rect>
-        <x>570</x>
-        <y>390</y>
+        <x>590</x>
+        <y>150</y>
         <width>151</width>
         <height>41</height>
        </rect>
@@ -787,6 +779,107 @@ members (using filters)</string>
       </property>
       <property name="text">
        <string>Display</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="filter_btn">
+      <property name="geometry">
+       <rect>
+        <x>590</x>
+        <y>250</y>
+        <width>151</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Filter</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelRevenue_9">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>320</y>
+        <width>191</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Add/Delete members</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBox">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>350</y>
+        <width>171</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Add</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Delete</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QPushButton" name="addDelete_btn">
+      <property name="geometry">
+       <rect>
+        <x>590</x>
+        <y>350</y>
+        <width>151</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Add/Delete</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineName">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>400</y>
+        <width>171</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="placeholderText">
+       <string>Name</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineExecutive">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>440</y>
+        <width>171</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="placeholderText">
+       <string>Executive?</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineExpiry">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>480</y>
+        <width>171</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="placeholderText">
+       <string>Expiry</string>
       </property>
      </widget>
     </widget>

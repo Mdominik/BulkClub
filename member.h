@@ -16,14 +16,14 @@ public:
     MembershipType getType() const {return m_type;}
     QDate getDate() const {return m_date;}
     float getTotalSpent() const {return m_totalSpent;}
-    int getRebate() const {return m_rebateAmount;}
+    float getRebate() const {return m_rebateAmount;}
 
     void setName(QString name) {m_name = name;}
     void setNumber(int number) {m_number = number;}
     void setType(MembershipType type) {m_type = type;}
     void setDate(QDate date) {m_date = date;}
     void setTotalSpent(float spent) {m_totalSpent = spent;}
-    void setRebate(int rebate) {m_rebateAmount = rebate;}
+    void setRebate(float rebate) {m_rebateAmount = rebate;}
 
 
 
@@ -32,8 +32,8 @@ private:
     int m_number;
     MembershipType m_type;
     QDate m_date;
-    float m_totalSpent;
-    int m_rebateAmount=0; //in percent
+    float m_totalSpent=0.0;
+    float m_rebateAmount=0.0; //in percent
 
 };
 
