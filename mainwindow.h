@@ -7,6 +7,7 @@
 #include <QMessageBox>
 #include <iostream>
 #include <QDebug>
+#include <ctime>
 #include "managementsystem.h"
 #include "inside.h"
 #include "sale.h"
@@ -35,6 +36,14 @@ private slots:
     void on_btn_searchByItemsName_released();
 
     void on_display_btn_4_released();
+
+    void on_filter_btn_released();
+
+    void on_addDelete_btn_pressed();
+
+    void on_addDelete_btn_released();
+
+    void on_addDelete_combo_currentIndexChanged(int index);
 
 private:
     Ui::MainWindow *ui;

@@ -10,6 +10,7 @@
 #include <QVector>
 #include <functional>
 
+
 #define CREDENTIALS_FILE "/home/dominik/projects/study/BulkClub/BulkClub/login.txt"
 #define DAY1_FILE "/home/dominik/projects/study/BulkClub/BulkClub/resources/day1.txt"
 #define DAY2_FILE "/home/dominik/projects/study/BulkClub/BulkClub/resources/day2.txt"
@@ -19,8 +20,10 @@
 #define DAY6_FILE "/home/dominik/projects/study/BulkClub/BulkClub/resources/day6.txt"
 #define DAY7_FILE "/home/dominik/projects/study/BulkClub/BulkClub/resources/day7.txt"
 #define MEMBERS_FILE "/home/dominik/projects/study/BulkClub/BulkClub/resources/warehouse shoppers.txt"
+#define TMP_FILE "/home/dominik/projects/study/BulkClub/BulkClub/resources/tmp.txt"
 
-const float REBATE_PERCENT = 0.03;
+#define LINES_MEMBERS 4
+#define LINES_SALES 4
 
 enum CurrentlyLogged {
     noOne, admin, manager
@@ -48,7 +51,8 @@ public:
     QVector<int> getRegularMembers() const {return m_regularMembers;}
     QVector<Sale> getAllSalesOneVec() const {return m_allSalesOneVec;}
     QVector<Item*> getAllItems() const { return m_allItems;}
-
+    void addMemberToFile(Member& m);
+    void deleteMemberFromFile(QString& member_name);
 private:
     User admin;
     User manager;

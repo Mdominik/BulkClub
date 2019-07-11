@@ -21,17 +21,24 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->admin_man->hide();
     ui->id->hide();
     ui->line->hide();
+    ui->delete_combobox->hide();
     QStringList list;
 
+    //copy items vector
     QVector<Item*> v = manSystem.getAllItems();
+
+    //sort members by name
     std::sort(v.begin(), v.end(), [](Item* a, Item* b) {
         return a->getName() < b->getName();
     });
-    //add names of items to the combo box
 
+
+    //add names of items to the combo box
     for(auto& x : v) {
         list.append(x->getName());
     }
+
+    //add items to the combo box
     ui->ItemsComboBox->addItems(list);
 }
 
@@ -97,18 +104,10 @@ void MainWindow::on_logout_released()
 void MainWindow::on_display_btn_released()
 {
     ui->display->clear();
-    float priceSum=0;
-
+    int priceSum=0;
     int sum_exec = 0;
     int sum_regular = 0;
 
-//    qInfo() << manSystem.getSales()[0].size();
-//    qInfo() << manSystem.getSales()[1].size();
-//    qInfo() << manSystem.getSales()[2].size();
-//    qInfo() << manSystem.getSales()[3].size();
-//    qInfo() << manSystem.getSales()[4].size();
-//    qInfo() << manSystem.getSales()[5].size();
-//    qInfo() << manSystem.getSales()[6].size();
     for(auto& sale: manSystem.getSales()[ui->weekdayBox->currentIndex()]) {
         if(ui->showExec->checkState()) {
             int i = manSystem.getExecutiveMembers().indexOf(sale.getMembersID());
@@ -146,7 +145,7 @@ void MainWindow::on_display_btn_2_released()
 {
     manSystem.sortPurchasesByNumber();
     ui->display_2->clear();
-    float sum=0;
+    int sum=0;
     for(auto& sale: manSystem.getAllSalesOneVec()) {
         ui->display_2->append(sale.getDate().toString());
         ui->display_2->append(QString::number(sale.getMembersID()));
@@ -164,7 +163,7 @@ void MainWindow::on_display_btn_2_released()
 void MainWindow::on_display_btn_3_released()
 {
     ui->display_3->clear();
-    float sum=0;
+    int sum=0;
 //    copy and sort Items by count number
     QVector<Item*> v = manSystem.getAllItems();
     std::sort(v.begin(), v.end(), [](Item* a, Item* b) {
@@ -200,7 +199,7 @@ void MainWindow::on_display_btn_3_released()
 
 void MainWindow::on_btn_searchByItemsName_released()
 {
-    float total=0;
+    int total=0;
     ui->display_3->clear();
     QString text = ui->searchByItemsName->text();
     for(auto& item : manSystem.getAllItems()) {
@@ -240,5 +239,78 @@ void MainWindow::on_display_btn_4_released()
         if(static_cast<bool>(!mem.getType())) ui->display_4->append("Rebate: " + QString::number(mem.getRebate()));
 
         ui->display_4->append("");
+    }
+}
+
+void MainWindow::on_filter_btn_released()
+{
+    //clear the field
+    ui->display_4->clear();
+
+    int month = ui->expiryBox->currentIndex()+1;
+    for(auto& mem : manSystem.getMembers()) {
+
+        if(mem.getDate().month()==month) {
+            //print name
+            ui->display_4->append(mem.getName());
+
+            //print id
+            ui->display_4->append("ID: " + QString::number(mem.getNumber()));
+
+            //print type
+            static_cast<bool>(mem.getType()) ? ui->display_4->append("Regular") : ui->display_4->append("Executive"); //print type
+
+            //print total spent
+            ui->display_4->append("Total spent: " + QString::number(mem.getTotalSpent()));
+
+            //print rebate
+            if(static_cast<bool>(!mem.getType())) ui->display_4->append("Rebate: " + QString::number(mem.getRebate()));
+
+            ui->display_4->append("Expiry date: " + mem.getDate().toString("dd.MM.yyyy"));
+            ui->display_4->append("");
+        }
+    }
+}
+
+void MainWindow::on_addDelete_btn_pressed()
+{
+    QString member_name = ui->delete_combobox->currentText();
+    if(!ui->addDelete_combo->currentIndex()) {
+        Member m;
+        srand(time(NULL));
+        m.setName(ui->lineName->text());
+        m.setDate(QDate::fromString(ui->lineExpiry->text(), "MM/dd/yyyy"));
+        qInfo() << m.getDate().toString();
+        m.setNumber(rand()%100000);
+        !ui->lineExecutive->text().compare("1") ? m.setType(MembershipType::Executive) : m.setType(MembershipType::Regular);
+        manSystem.getMembers().push_back(m);
+        manSystem.addMemberToFile(m);
+    } else {
+        manSystem.deleteMemberFromFile(member_name);
+    }
+}
+
+void MainWindow::on_addDelete_btn_released()
+{}
+
+void MainWindow::on_addDelete_combo_currentIndexChanged(int index)
+{
+    ui->delete_combobox->show();
+    ui->lineExecutive->hide();
+    ui->lineExpiry->hide();
+    ui->lineName->hide();
+    ui->delete_combobox->clear();
+    QStringList list;
+    if(index) {
+        for(auto& x : manSystem.getMembers()) {
+            list.append(x.getName());
+        }
+        ui->delete_combobox->addItems(list);
+    }
+    else {
+        ui->delete_combobox->hide();
+        ui->lineExecutive->show();
+        ui->lineExpiry->show();
+        ui->lineName->show();
     }
 }

@@ -807,7 +807,7 @@ members (using filters)</string>
        <string>Add/Delete members</string>
       </property>
      </widget>
-     <widget class="QComboBox" name="comboBox">
+     <widget class="QComboBox" name="addDelete_combo">
       <property name="geometry">
        <rect>
         <x>400</x>
@@ -882,6 +882,34 @@ members (using filters)</string>
        <string>Expiry</string>
       </property>
      </widget>
+     <widget class="QComboBox" name="delete_combobox">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>430</y>
+        <width>341</width>
+        <height>41</height>
+       </rect>
+      </property>
+     </widget>
+     <zorder>delete_combobox</zorder>
+     <zorder>display_4</zorder>
+     <zorder>label_4</zorder>
+     <zorder>optionBox</zorder>
+     <zorder>labelRevenue_4</zorder>
+     <zorder>labelRevenue_5</zorder>
+     <zorder>expiryBox</zorder>
+     <zorder>display_btn_4</zorder>
+     <zorder>filter_btn</zorder>
+     <zorder>labelRevenue_9</zorder>
+     <zorder>addDelete_combo</zorder>
+     <zorder>addDelete_btn</zorder>
+     <zorder>lineName</zorder>
+     <zorder>lineExecutive</zorder>
+     <zorder>lineExpiry</zorder>
     </widget>
     <widget class="QWidget" name="inventory">
      <attribute name="title">
@@ -893,11 +921,11 @@ members (using filters)</string>
         <x>10</x>
         <y>30</y>
         <width>351</width>
-        <height>421</height>
+        <height>501</height>
        </rect>
       </property>
      </widget>
-     <widget class="QComboBox" name="addOrDelete">
+     <widget class="QComboBox" name="addDeleteInventory">
       <property name="geometry">
        <rect>
         <x>420</x>

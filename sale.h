@@ -4,6 +4,8 @@
 #include "item.h"
 #include <QFile>
 #include <QDate>
+const float REBATE_PERCENT = 0.03;
+
 class Sale
 {
 public:
@@ -16,7 +18,7 @@ public:
     void setMembersID(int number) {m_number=number;}
     void setQuantity(int q) {m_quantity=q;}
     void setDate(QDate date) {m_date=date;}
-    float getPriceBeforeTax() const {return m_item->getPrice()*(1-sales_tax);}
+    int getPriceBeforeTax() const {return m_item->getPrice()*(1-sales_tax);}
     void setItem(Item* it) {m_item=it;}
 
 private:

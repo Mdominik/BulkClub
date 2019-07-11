@@ -78,15 +78,15 @@ bool ManagementSystem::populateMembersData(QFile& file){
             bool encoding;
             QByteArray line = file.readLine();
             line = line.trimmed();
-            if(counter%4==0) {
+            if(counter%LINES_MEMBERS==0) {
                 name_buf = QString(line);
                 qInfo() << line;
             }
-            else if((counter+3)%4==0) {
+            else if((counter+3)%LINES_MEMBERS==0) {
                 number_buf = QString(line).toInt(&encoding, 10);
 
             }
-            else if((counter+2)%4==0) {
+            else if((counter+2)%LINES_MEMBERS==0) {
 
                 if(line.operator == ("Regular")) {
                     type_buf = MembershipType::Regular;
@@ -95,9 +95,10 @@ bool ManagementSystem::populateMembersData(QFile& file){
                     type_buf = MembershipType::Executive;
                 }
             }
-            else if((counter+1)%4==0) {
+            else if((counter+1)%LINES_MEMBERS==0) {
                 QString date_str = QString(line);
                 date_buf = QDate::fromString(date_str,"MM/dd/yyyy");
+
                 mem = new Member;
                 mem->setDate(date_buf);
                 mem->setName(name_buf);
@@ -106,6 +107,7 @@ bool ManagementSystem::populateMembersData(QFile& file){
                 m_members.push_back(*mem);
 
                 delete mem;
+
             }
             counter++;
         }
@@ -128,7 +130,7 @@ bool ManagementSystem::populateDaySales(QFile* file) {
         QDate date_buf;
         QString item_buf;
         QString item_line_buf;
-        float item_price_buf;
+        int item_price_buf;
         int quantity_buf;
         int counter=0;
         if(file->exists()){
@@ -142,22 +144,22 @@ bool ManagementSystem::populateDaySales(QFile* file) {
                 QByteArray line = file->readLine();
                 line = line.trimmed();
 
-                if(counter % lines_number==0) {
+                if(counter % LINES_SALES==0) {
                     QString date_str = QString(line);
                     date_buf = QDate::fromString(date_str,"MM/dd/yyyy");
                 }
-                else if((counter+3) % lines_number==0) {
+                else if((counter+3) % LINES_SALES==0) {
                     number_buf = QString(line).toInt(&encoding, 10);
 
                 }
-                else if((counter+2) % lines_number==0) {
+                else if((counter+2) % LINES_SALES==0) {
                     item_buf = QString(line);
                 }
-                else if((counter+1) % lines_number==0) {
+                else if((counter+1) % LINES_SALES==0) {
 
                     QStringList list;
                     list = QString(line).split('\t');
-                    item_price_buf = QString(list[0]).toFloat();
+                    item_price_buf = static_cast<int>(QString(list[0]).toFloat()*100);
                     quantity_buf = QString(list[1]).toInt();
                     sale = new Sale;
                     sale->setDate(date_buf);
@@ -232,4 +234,46 @@ void ManagementSystem::sortMembers(bool is_byID) {
     std::sort(m_members.begin(), m_members.end(), [&is_byID](Member& a, Member& b) {
         return is_byID ? a.getNumber() < b.getNumber() : a.getRebate() > b.getRebate();
     });
+}
+
+void ManagementSystem::addMemberToFile(Member& m) {
+    QFile file(MEMBERS_FILE);
+    if (file.open(QIODevice::WriteOnly | QIODevice::Append)) {
+        QTextStream stream(&file);
+        stream << m.getName() << endl;
+        stream << m.getNumber() << endl;
+        static_cast<bool>(m.getType()) ? stream << "Executive" << endl : stream << "Regular" <<endl;
+        stream << m.getDate().toString("dd/MM/yyyy") << endl;
+    }
+}
+
+void ManagementSystem::deleteMemberFromFile(QString& member_name) {
+    QFile file(MEMBERS_FILE);
+    QFile file_tmp(TMP_FILE);
+    if(file.open(QIODevice::WriteOnly | QIODevice::Append))
+    {
+        file_tmp.resize(0);
+        QTextStream stream(&file_tmp);
+        while(!stream.atEnd()) {
+            stream << file.readLine();
+        }
+    }
+
+    if(file_tmp.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QTextStream stream(&file);
+        int counter = 0;
+        while(!stream.atEnd())
+        {
+            QString line = stream.readLine();
+            qInfo() << line;
+            if(line.contains(member_name) || counter > 0) {
+                counter++;
+                if(counter == 4) counter = 0;
+                continue;
+            } else {
+                stream << line;
+            }
+        }
+    }
 }
